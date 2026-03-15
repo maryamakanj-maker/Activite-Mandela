@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Activité Mandela</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
+        .page { max-width: 600px; margin: auto; background: white; padding: 20px; border: 2px solid #1a5f7a; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .cache { display: none; }
+        .question { margin-bottom: 20px; padding: 15px; border-bottom: 1px solid #eee; background: #fff; }
+        button { width: 100%; padding: 15px; background: #1a5f7a; color: white; border: none; cursor: pointer; font-size: 16px; font-weight: bold; border-radius: 5px; }
+        button:hover { background: #144a5f; }
+        input[type="text"], textarea, select { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        h1 { color: #1a5f7a; text-align: center; }
+        b { color: #1a5f7a; }
+    </style>
+</head>
+<body>
+
+<div class="page">
+    <h1>Activité : Nelson Mandela</h1>
+
+    <div id="etape1">
+        <p><b>Prénom :</b> <input type="text" id="prenom"></p>
+        <p><b>Nom :</b> <input type="text" id="nom"></p>
+        <p><b>École :</b> 
+            <select id="ecole">
+                <option value="">-- Choisir --</option>
+                <option>Choumrane</option><option>Fahs</option><option>Karamé</option>
+                <option>Kassir</option><option>Libération</option><option>Saad</option>
+                <option>Sader</option><option>Yaacoub</option>
+            </select>
+        </p>
+        <button onclick="continuer()">COMMENCER L'ACTIVITÉ</button>
+    </div>
+
+    <div id="etape2" class="cache">
+        <div class="question">
+            <b>1. Combien d'années Mandela a-t-il passées en prison ?</b><br>
+            <input type="radio" name="q1" value="0"> 5 ans | 
+            <input type="radio" name="q1" value="10"> 26 ans | 
+            <input type="radio" name="q1" value="0"> 10 ans
+        </div>
+        <div class="question">
+            <b>2. Quel prix a-t-il reçu en 1993 ?</b><br>
+            <input type="radio" name="q2" value="10"> Nobel de la Paix | 
+            <input type="radio" name="q2" value="0"> Prix de Musique
+        </div>
+        <div class="question">
+            <b>3. Quel était le nom du système raciste ?</b><br>
+            <input type="radio" name="q3" value="10"> Apartheid | 
+            <input type="radio" name="q3" value="0"> Démocratie
+        </div>
+        <div class="question">
+            <b>4. Mandela est le 1er président noir (Vrai/Faux) ?</b><br>
+            <input type="radio" name="vf1" value="10"> Vrai | <input type="radio" name="vf1" value="0"> Faux
+        </div>
+        <div class="question">
+            <b>5. Mandela encourage la vengeance (Vrai/Faux) ?</b><br>
+            <input type="radio" name="vf2" value="0"> Vrai | <input type="radio" name="vf2" value="10"> Faux
+        </div>
+        <div class="question">
+            <b>6. Il dédie la liberté aux héros (Vrai/Faux) ?</b><br>
+            <input type="radio" name="vf3" value="10"> Vrai | <input type="radio" name="vf3" value="0"> Faux
+        </div>
+        <div class="question">
+            <b>7. Pourquoi dit-on "Nation Arc-en-ciel" ?</b><br>
+            <input type="text" id="o1" placeholder="Ta réponse ici...">
+        </div>
+        <div class="question">
+            <b>8. Explique la métaphore : "soigner les blessures" ?</b><br>
+            <input type="text" id="o2" placeholder="Ta réponse ici...">
+        </div>
+        <div class="question">
+            <b>9. Production Écrite :</b><br>
+            <i>Écris trois vœux pour lutter contre la discrimination mondiale (utilise "Que..." ou "Le temps de... est arrivé").</i><br>
+            <textarea id="prod" rows="5" placeholder="1. Que... &#10;2. Que... &#10;3. Le temps de..."></textarea>
+        </div>
+        <button onclick="calculer()">VALIDER MES RÉPONSES</button>
+    </div>
+
+    <div id="etape3" class="cache">
+        <h2 style="text-align:center">Résultat de <span id="span_nom"></span></h2>
+        <h1 style="text-align:center; font-size: 50px;"><span id="score">0</span>/100</h1>
+        <button style="background:green" onclick="wa()">Envoyer au professeur par WhatsApp</button>
+        <br><br>
+        <button style="background:#777" onclick="location.reload()">Recommencer</button>
+    </div>
+</div>
+
+<script>
+    let p, n, e;
+    function continuer() {
+        p = document.getElementById('prenom').value;
+        n = document.getElementById('nom').value;
+        e = document.getElementById('ecole').value;
+        if(!p || !n || !e) { alert("S'il te plaît, remplis ton prénom, ton nom et choisis ton école !"); return; }
+        document.getElementById('etape1').className = "cache";
+        document.getElementById('etape2').className = "";
+        window.scrollTo(0,0);
+    }
+
+    function calculer() {
+        let s = 0;
+        // Scores QCM et V/F (60 points)
+        if(document.querySelector('input[name="q1"]:checked')?.value == "10") s += 10;
+        if(document.querySelector('input[name="q2"]:checked')?.value == "10") s += 10;
+        if(document.querySelector('input[name="q3"]:checked')?.value == "10") s += 10;
+        if(document.querySelector('input[name="vf1"]:checked')?.value == "10") s += 10;
+        if(document.querySelector('input[name="vf2"]:checked')?.value == "10") s += 10;
+        if(document.querySelector('input[name="vf3"]:checked')?.value == "10") s += 10;
+        
+        // Questions ouvertes (20 points)
+        if(document.getElementById('o1').value.length > 3) s += 10;
+        if(document.getElementById('o2').value.length > 3) s += 10;
+        
+        // Production (20 points)
+        if(document.getElementById('prod').value.length > 15) s += 20;
+
+        document.getElementById('etape2').className = "cache";
+        document.getElementById('etape3').className = "";
+        document.getElementById('score').innerText = s;
+        document.getElementById('span_nom').innerText = p;
+    }
+
+    function wa() {
+        let s = document.getElementById('score').innerText;
+        let prodText = document.getElementById('prod').value;
+        let m = `Nelson Mandela (S2)%0AÉlève: ${p} ${n}%0AÉcole: ${e}%0AScore: ${s}/100%0AVœux: ${prodText}`;
+        window.open("https://wa.me/96171725647?text=" + encodeURIComponent(m));
+    }
+</script>
+
+</body>
